@@ -441,6 +441,11 @@ chokidar@^3.5.3:
   optionalDependencies:
     fsevents "~2.3.2"
 
+ci@^2.2.0:
+  version "2.2.0"
+  resolved "https://registry.yarnpkg.com/ci/-/ci-2.2.0.tgz#778b9250c96f1155e3b25de59e71aa4aa383cebc"
+  integrity sha512-lBkEN6XclyW0jnprtFQ+dsbP+9zwmo37Z1cV38h4FSDgI2QzFqwknJnVSvRxK9UXkPC4ZcVOVFyCVrNylTX52Q==
+
 color-convert@^1.9.0:
   version "1.9.3"
   resolved "https://registry.yarnpkg.com/color-convert/-/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
@@ -735,6 +740,11 @@ hls.js@^0.14.17:
   dependencies:
     eventemitter3 "^4.0.3"
     url-toolkit "^2.1.6"
+
+hls.js@^1.2.0:
+  version "1.2.0"
+  resolved "https://registry.yarnpkg.com/hls.js/-/hls.js-1.2.0.tgz#e213773be09d6f99f08cefbf608c4a1fe226f998"
+  integrity sha512-QIEQIUpBRhcpBMq3NA+/qozG8lbNfVekuX7kCMUlhiVu4382xFWsnwcuBe/CA4Gp/wB/pf2aRBaGRFlxh/FN8g==
 
 is-binary-path@~2.1.0:
   version "2.1.0"

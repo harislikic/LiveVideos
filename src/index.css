@@ -3,10 +3,3 @@
 @tailwind utilities;
 
 
-.container
-{
-    aspect-ratio: autog;
-    height: 600px;
-    width: 300px;
-    justify-content: center;
-}
