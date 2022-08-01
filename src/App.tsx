@@ -13,7 +13,7 @@ function App() {
     <nav>
     <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/videos/1" element={<Videos />} />
+        <Route path="/videos/:id/1" element={<Videos />} />
         <Route path="/videos/2" element={<Error />} />
       </Routes>
     </nav>

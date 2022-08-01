@@ -1,14 +1,15 @@
 import React from "react";
+import { useLocation, useSearchParams } from "react-router-dom";
 import ReactHlsPlayer from "./video";
 
 
 function Videos() {
     const playerRef = React.useRef<any>();
   
-    const queryParams = new URLSearchParams(window.location.search)
-    const term = queryParams.get("term")
-    console.log(term);
-  
+    console.log('current URL 👉️', window.location.href);
+    console.log('current Pathname 👉️', window.location.pathname);
+
+   
     const data = {
       id : 1,
       link:"https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8"
@@ -32,4 +33,8 @@ function Videos() {
   
   
   export default Videos;
+
+function useRouter() {
+    throw new Error("Function not implemented.");
+}
   
