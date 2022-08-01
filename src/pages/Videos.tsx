@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
-import ReactHlsPlayer from './video';
+import ReactHlsPlayer from '../video';
 
 function Videos() {
   const playerRef = React.useRef<any>();

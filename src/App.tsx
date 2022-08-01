@@ -1,7 +1,7 @@
 import React from "react";
-import Home from './Home';
-import Videos from "./Videos";
-import Error from "./Error";
+import Home from './pages/Home';
+import Videos from "./pages/Videos";
+import Error from "./pages/Error";
 import { Routes, Route, Link } from "react-router-dom";
 
 
