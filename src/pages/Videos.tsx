@@ -1,13 +1,12 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import ReactHlsPlayer from '../video';
 
 function Videos() {
   const playerRef = React.useRef<any>();
 
-  const queryParams = new URLSearchParams(window.location.search);
-  const term = queryParams.get('term');
-  console.log(term);
+  console.log('current URL 👉️', window.location.href);
+  console.log('current Pathname 👉️', window.location.pathname);
 
   const data = {
     id: 1,

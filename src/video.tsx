@@ -41,8 +41,8 @@ function ReactHlsPlayer({
               ?.play()
               .catch(() =>
                 console.log(
-                  'Unable to autoplay prior to user interaction with the dom.',
-                ),
+                  'Unable to autoplay prior to user interaction with the dom.'
+                )
               );
           }
         });
