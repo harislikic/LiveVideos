@@ -4,7 +4,6 @@ import ReactHlsPlayer from "./video";
 function App() {
   const playerRef = React.useRef<any>();
 
-  return (
     <div className="container mx-auto grid h-screen place-items-center">
       <ReactHlsPlayer
         className="content-center"
