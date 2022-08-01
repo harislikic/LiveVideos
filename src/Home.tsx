@@ -4,7 +4,7 @@ import React from "react";
 function Home() {
 
   return(
-    <div className="container">welcomme</div>
+    <div className="container">welcome</div>
   )
   
 }
