@@ -1,5 +1,5 @@
-import React, { useEffect, RefObject } from 'react';
-import Hls, { HlsConfig } from 'hls.js';
+import React, { useEffect, RefObject } from "react";
+import Hls, { HlsConfig } from "hls.js";
 
 export interface HlsPlayerProps
   extends React.VideoHTMLAttributes<HTMLVideoElement> {
@@ -41,7 +41,7 @@ function ReactHlsPlayer({
               ?.play()
               .catch(() =>
                 console.log(
-                  'Unable to autoplay prior to user interaction with the dom.'
+                  "Unable to autoplay prior to user interaction with the dom."
                 )
               );
           }
