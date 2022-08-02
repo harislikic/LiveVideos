@@ -13,8 +13,8 @@ function App() {
     <nav>
     <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/videos/1" element={<Videos />} />
-        <Route path="/videos/2" element={<Error />} />
+        <Route path="/videos/:id" element={<Videos />} />
+        <Route path="*" element={<Error />}  />
       </Routes>
     </nav>
   </>
