@@ -1,13 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Home from './pages/Home';
-import { getData } from '/Users/indiigo_o/Desktop/valens-player/src/data/data';
+import { getData } from './data/data';
 import ReactHlsPlayer from './video';
 import MissingVideo from './pages/MissingVideo';
-import toggle from './State'
+import state from './State';
+import { observer } from 'mobx-react-lite';
 
 function App() {
-  
- /* const [videoToggle, setVideoToggle] = useState(false);
+  /* const [videoToggle, setVideoToggle] = useState(false);
   function videoPlaying() {
     setVideoToggle(true);
   }
@@ -30,7 +30,7 @@ function App() {
   }
   return movie ? (
     <>
-      {toggle.state.playVideo && (
+      {state.playVideo && (
         <div className="flex justify-center">
           <p className="text-2xl">Video is playing</p>
         </div>
@@ -38,8 +38,8 @@ function App() {
       <Videos
         playerRef={playerRef}
         movie={movie}
-       // videoPlaying={videoPlaying}
-       // videoPaused={videoPaused}
+        // videoPlaying={videoPlaying}
+        // videoPaused={videoPaused}
       />
     </>
   ) : (
@@ -47,7 +47,7 @@ function App() {
   );
 }
 
-export default App;
+export default observer(App);
 
 interface VideoProps {
   movie: {
@@ -56,17 +56,16 @@ interface VideoProps {
     name: string;
   };
   playerRef: any;
- // videoPlaying: any;
- // videoPaused: any;
+  // videoPlaying: any;
+  // videoPaused: any;
 }
 function Videos({ movie, playerRef }: VideoProps) {
-
   useEffect(() => {
-    playerRef.current.addEventListener('play', toggle.state.play());
-    playerRef.current.addEventListener('pause', toggle.state.pause());
+    playerRef.current.addEventListener('play', state.play);
+    playerRef.current.addEventListener('pause', state.pause);
     return () => {
-      playerRef.current.removeEventListener('play', toggle.state.play());
-      playerRef.current.removeEventListener('pause', toggle.state.pause());
+      playerRef.current.removeEventListener('play', state.play);
+      playerRef.current.removeEventListener('pause', state.pause);
     };
   }, []);
 
