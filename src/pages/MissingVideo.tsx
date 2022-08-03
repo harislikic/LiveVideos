@@ -1,9 +1,8 @@
 function Home() {
   return (
-    <div className="container mx-auto grid h-screen place-items-center">
-      <div className="content-center">Oops! Looks like we have a problem!</div>
-      <p>There is nothing here</p>
-      <a href="/">Back to homepage!</a>
+    <div className="flex flex-col justify-center items-center my-36">
+      <div className="text-5xl">Oops! Looks like we have a problem!</div>
+      <a href="/" className="text-l my-3">Back to homepage!</a>
     </div>
   );
 }
