@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import Home from './pages/Home';
-import {getData}  from './data/data';
+import { getData } from './data/data';
 import ReactHlsPlayer from './video';
 import MissingVideo from './pages/MissingVideo';
-import state from './State'
+import state from './State';
 import { observer } from 'mobx-react-lite';
 
- function App() {
-  
- /* const [videoToggle, setVideoToggle] = useState(false);
+function App() {
+  /* const [videoToggle, setVideoToggle] = useState(false);
   function videoPlaying() {
     setVideoToggle(true);
   }
@@ -16,8 +15,6 @@ import { observer } from 'mobx-react-lite';
     setVideoToggle(false);
   }
 */
-
-
   const playerRef = React.useRef<any>();
   let params: any = window.location.search
     .slice(1)
@@ -41,8 +38,8 @@ import { observer } from 'mobx-react-lite';
       <Videos
         playerRef={playerRef}
         movie={movie}
-       // videoPlaying={videoPlaying}
-       // videoPaused={videoPaused}
+        // videoPlaying={videoPlaying}
+        // videoPaused={videoPaused}
       />
     </>
   ) : (
@@ -50,7 +47,7 @@ import { observer } from 'mobx-react-lite';
   );
 }
 
-export default observer(App)
+export default observer(App);
 
 interface VideoProps {
   movie: {
@@ -59,11 +56,10 @@ interface VideoProps {
     name: string;
   };
   playerRef: any;
- // videoPlaying: any;
- // videoPaused: any;
+  // videoPlaying: any;
+  // videoPaused: any;
 }
 function Videos({ movie, playerRef }: VideoProps) {
-
   useEffect(() => {
     playerRef.current.addEventListener('play', state.play);
     playerRef.current.addEventListener('pause', state.pause);
