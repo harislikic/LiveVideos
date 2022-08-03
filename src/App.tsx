@@ -1,10 +1,18 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Home from './pages/Home';
 import { getData } from '/Users/indiigo_o/Desktop/valens-player/src/data/data';
 import ReactHlsPlayer from './video';
 import MissingVideo from './pages/MissingVideo';
 
 function App() {
+  const [videoToggle, setVideoToggle] = useState(false);
+  function videoPlaying() {
+    setVideoToggle(true);
+  }
+  function videoPaused() {
+    setVideoToggle(false);
+  }
+
   const playerRef = React.useRef<any>();
   let params: any = window.location.search
     .slice(1)
@@ -13,14 +21,25 @@ function App() {
     ?.replace('id=', '');
   let data = getData();
   let movie = data.find(x => x.id == params);
-  console.log(movie);
   let check: boolean = window.location.search.includes('id=');
 
   if (check == false) {
     return <Home></Home>;
   }
   return movie ? (
-    <Videos playerRef={playerRef} movie={movie} />
+    <>
+      {videoToggle && (
+        <div className="flex justify-center">
+          <p className="text-2xl">Video is playing</p>
+        </div>
+      )}
+      <Videos
+        playerRef={playerRef}
+        movie={movie}
+        videoPlaying={videoPlaying}
+        videoPaused={videoPaused}
+      />
+    </>
   ) : (
     <MissingVideo />
   );
@@ -35,14 +54,24 @@ interface VideoProps {
     name: string;
   };
   playerRef: any;
+  videoPlaying: any;
+  videoPaused: any;
 }
-function Videos({ movie, playerRef }: VideoProps) {
-  console.log('UlaziLi', movie, playerRef);
+function Videos({ movie, playerRef, videoPlaying, videoPaused }: VideoProps) {
+  useEffect(() => {
+    playerRef.current.addEventListener('play', videoPlaying);
+    playerRef.current.addEventListener('pause', videoPaused);
+    return () => {
+      playerRef.current.removeEventListener('play', videoPlaying);
+      playerRef.current.removeEventListener('pause', videoPaused);
+    };
+  }, []);
 
   return (
-    <div className="container mx-auto grid h-screen place-items-center">
-      <div>{movie.name}</div>
+    <div className="flex flex-col justify-center items-center">
+      <div className="text-xl my-6">{movie.name}...</div>
       <ReactHlsPlayer
+        id="player"
         className="content-center"
         playerRef={playerRef}
         src={movie.link}
@@ -50,8 +79,11 @@ function Videos({ movie, playerRef }: VideoProps) {
         controls={true}
         width="50%"
         height="auto"
+        muted
       />
-      <a href="/">Back to homepage!</a>
+      <a href="/" className="text-l my-3">
+        Back to homepage!
+      </a>
     </div>
   );
 }
