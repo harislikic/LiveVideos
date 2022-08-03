@@ -3,16 +3,18 @@ import Home from './pages/Home';
 import { getData } from '/Users/indiigo_o/Desktop/valens-player/src/data/data';
 import ReactHlsPlayer from './video';
 import MissingVideo from './pages/MissingVideo';
+import toggle from './State'
 
 function App() {
-  const [videoToggle, setVideoToggle] = useState(false);
+  
+ /* const [videoToggle, setVideoToggle] = useState(false);
   function videoPlaying() {
     setVideoToggle(true);
   }
   function videoPaused() {
     setVideoToggle(false);
   }
-
+*/
   const playerRef = React.useRef<any>();
   let params: any = window.location.search
     .slice(1)
@@ -28,7 +30,7 @@ function App() {
   }
   return movie ? (
     <>
-      {videoToggle && (
+      {toggle.state.playVideo && (
         <div className="flex justify-center">
           <p className="text-2xl">Video is playing</p>
         </div>
@@ -36,8 +38,8 @@ function App() {
       <Videos
         playerRef={playerRef}
         movie={movie}
-        videoPlaying={videoPlaying}
-        videoPaused={videoPaused}
+       // videoPlaying={videoPlaying}
+       // videoPaused={videoPaused}
       />
     </>
   ) : (
@@ -54,16 +56,17 @@ interface VideoProps {
     name: string;
   };
   playerRef: any;
-  videoPlaying: any;
-  videoPaused: any;
+ // videoPlaying: any;
+ // videoPaused: any;
 }
-function Videos({ movie, playerRef, videoPlaying, videoPaused }: VideoProps) {
+function Videos({ movie, playerRef }: VideoProps) {
+
   useEffect(() => {
-    playerRef.current.addEventListener('play', videoPlaying);
-    playerRef.current.addEventListener('pause', videoPaused);
+    playerRef.current.addEventListener('play', toggle.state.play());
+    playerRef.current.addEventListener('pause', toggle.state.pause());
     return () => {
-      playerRef.current.removeEventListener('play', videoPlaying);
-      playerRef.current.removeEventListener('pause', videoPaused);
+      playerRef.current.removeEventListener('play', toggle.state.play());
+      playerRef.current.removeEventListener('pause', toggle.state.pause());
     };
   }, []);
 
