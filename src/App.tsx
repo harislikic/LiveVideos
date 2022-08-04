@@ -3,7 +3,7 @@ import Home from './pages/Home';
 import { getData } from './data/data';
 import ReactHlsPlayer from './video';
 import MissingVideo from './pages/MissingVideo';
-import state from './Stores/State';
+import state from './Stores/VideoStore';
 import { observer } from 'mobx-react-lite';
 import Messages from './pages/Messages';
 

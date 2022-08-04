@@ -1,7 +1,7 @@
 import { observer } from 'mobx-react-lite';
 import { useEffect } from 'react';
-import { UNSAFE_LocationContext } from 'react-router-dom';
 import Message from '../Stores/MessageStore';
+import  User from '../Stores/UserStore'
 
 function Messages() {
   let id: any = window.location.search
@@ -9,22 +9,18 @@ function Messages() {
     .split('&')
     .find(x => x.includes('id='))
     ?.replace('id=', '');
+console.log('id movie',id);
   let message: any;
+  let isModerator= User.isModerator;
+  console.log('is moderator in message', isModerator);
 
- 
-//  useEffect(() => {
- //  for (var i in localStorage) {
-  //   console.log('message', localStorage);
-  //   Message.listMessages  = JSON.parse(localStorage.getItem('message') as any);
- //   }
-//  },[]);
 
-  useEffect(() => {  
-     console.log('message', localStorage);
-     Message.listMessages  = JSON.parse(localStorage.getItem('message') as any);
-  },[]);
 
- 
+  useEffect(() => {
+    console.log('message', localStorage);
+    Message.updateMessages();
+  }, []);
+
   return (
     <>
       <div className="container mx-auto w-1/2 border heig h-96">
@@ -36,6 +32,14 @@ function Messages() {
                   <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
                     <span className="block">{data.message}</span>
                   </div>
+                 { isModerator && <button className="button p-3 border border-gray-300  
+                 inline-flex items-center px-4 py-2 bg-red-600
+                  hover:bg-red-700 text-white text-sm font-medium rounded-md" 
+                  type="submit"
+                  onClick={()=>Message.deleteMessage(id)}
+                  >
+                    Delete
+                  </button>}
                 </li>
               ))}
             </ul>
@@ -61,6 +65,19 @@ function Messages() {
           </div>
         </div>
       </div>
+      <div className='p-3 justify-center flex row-auto'>
+      <button  className='p-3 border border-gray-300  hover:visible hover:bg-gray-100 '
+        onClick={()=>User.isModeratortrue()}
+      >
+        Moderator 
+        </button>
+        <button  className='p-3 border border-gray-300  hover:visible hover:bg-gray-100'
+        onClick={()=>User.isViewertrue()}
+      >
+        Viewer
+        </button>
+      </div>
+    
     </>
   );
 }

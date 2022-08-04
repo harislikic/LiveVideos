@@ -1,13 +1,14 @@
 import { makeAutoObservable } from 'mobx';
 
-class Message{
+class MessageStore{
+  id : any =new Date();
   message;
   moveiId;
 
-  constructor(_message:any,_movieId:any)
+  constructor(message:any,movieId:any)
   {
-   (this.message=_message),
-    (this.moveiId=_movieId)
+   this.message =message;
+   this.moveiId =movieId;
   }
 
 }
@@ -21,15 +22,20 @@ class Messages {
 
   addMessage(message:any,movieId:any)
   {
-    this.listMessages.push(new Message(message,movieId));
+    this.listMessages.push(new MessageStore(message,movieId));
+  
     localStorage.setItem('message',JSON.stringify(this.listMessages))
     console.log('add mesage funkcija',this.listMessages)
-    let valueRaw = localStorage.getItem('message')
-    let  value = JSON.parse(valueRaw as any)
-
-   
+    
   }
-  
+  updateMessages() {
+    this.listMessages = JSON.parse(localStorage.getItem('message') as any);
+  }
+  deleteMessage(id : any)
+  {
+    this.listMessages.splice(this.listMessages.indexOf(id),1)
+    localStorage.setItem('message',JSON.stringify(this.listMessages))
+  }
 }
 const message = new Messages();
 export default message;

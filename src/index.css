@@ -5,3 +5,11 @@
 * {
   font-family: 'Times New Roman', Times, serif;
 }
+
+
+.button{
+  display: none;
+}
+:hover + .button, .button:hover {
+  display: inline-block;
+}
