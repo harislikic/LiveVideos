@@ -26,7 +26,7 @@ class Messages {
   
     localStorage.setItem('message',JSON.stringify(this.listMessages))
     console.log('add mesage funkcija',this.listMessages)
-    console.log()
+    
     
   }
   updateMessages() {
