@@ -1,4 +1,4 @@
-import { getData } from '/Users/indiigo_o/Desktop/valens-player/src/data/data';
+import { getData } from '../data/data';
 
 function Home() {
   let data = getData();

@@ -3,8 +3,9 @@ import Home from './pages/Home';
 import { getData } from './data/data';
 import ReactHlsPlayer from './video';
 import MissingVideo from './pages/MissingVideo';
-import state from './State';
+import state from './Stores/State';
 import { observer } from 'mobx-react-lite';
+import Messages from './pages/Messages';
 
 function App() {
   /* const [videoToggle, setVideoToggle] = useState(false);
@@ -40,11 +41,16 @@ function App() {
         movie={movie}
         // videoPlaying={videoPlaying}
         // videoPaused={videoPaused}
+        
       />
+      <br />
+        <Messages/>
     </>
   ) : (
     <MissingVideo />
   );
+   
+
 }
 
 export default observer(App);
