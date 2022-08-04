@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import Home from './pages/Home';
 import { getData } from './data/data';
 import ReactHlsPlayer from './video';
@@ -70,22 +70,24 @@ function Videos({ movie, playerRef }: VideoProps) {
   }, []);
 
   return (
-    <div className="flex flex-col justify-center items-center">
-      <div className="text-xl my-6">{movie.name}...</div>
-      <ReactHlsPlayer
-        id="player"
-        className="content-center"
-        playerRef={playerRef}
-        src={movie.link}
-        autoPlay={false}
-        controls={true}
-        width="50%"
-        height="auto"
-        muted
-      />
-      <a href="/" className="text-l my-3">
+    <div>
+      <a href="/" className="text-l my-3 justify-start">
         Back to homepage!
       </a>
+      <div className="flex flex-col justify-center items-center">
+        <div className="text-xl my-6">{movie.name}...</div>
+        <ReactHlsPlayer
+          id="player"
+          className="content-center"
+          playerRef={playerRef}
+          src={movie.link}
+          autoPlay={false}
+          controls={true}
+          width="50%"
+          height="auto"
+          muted
+        />
+      </div>
     </div>
   );
 }
