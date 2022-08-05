@@ -22,15 +22,22 @@ class Messages {
 
   addMessage(message:any,movieId:any)
   {
+   //this.listMessages= JSON.parse(localStorage.getItem('message') as any);
     this.listMessages.push(new MessageStore(message,movieId));
-  
+    //localStorage.removeItem('message');
     localStorage.setItem('message',JSON.stringify(this.listMessages))
-    console.log('add mesage funkcija',this.listMessages)
-    
+   
+   
+   this.loadMessages(movieId);
     
   }
-  updateMessages() {
-    this.listMessages = JSON.parse(localStorage.getItem('message') as any);
+  loadMessages(movieId:any) {
+    if (localStorage.getItem('message') !== null) {
+      this.listMessages = JSON.parse(localStorage.getItem('message')as any).filter((x:any)=>x.moveiId.includes(movieId));
+    }
+   
+  //var newlist=JSON.parse(localStorage.getItem('message') as any);
+  //this.listMessages= newlist.filter((x:any)=>x.moveiId.includes(movieId));
   }
   deleteMessage(id : any)
   {
