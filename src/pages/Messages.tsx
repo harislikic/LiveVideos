@@ -17,7 +17,10 @@ function Messages() {
   useEffect(() => {
     console.log('local storage data;', localStorage);
 
-    Message.loadMessages(id);
+    var broj = Math.floor(Math.random()*10000);
+    console.log('broj',broj);
+
+    //Message.loadMessages();
   }, []);
 
   return (
@@ -27,7 +30,7 @@ function Messages() {
           <div className="relative   p-6 overflow-y-auto h-[20rem]">
             <ul className="space-y-2">
               {Message.listMessages.map(data => (
-                <li className="flex justify-start">
+                <li key={data.id} className="flex justify-start">
                   <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
                     <span className="block">{data.message}</span>
                   </div>

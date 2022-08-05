@@ -1,49 +1,62 @@
 import { makeAutoObservable } from 'mobx';
 
-class MessageStore{
-  id : any =new Date();
+
+// klasu ne koristim trenutno
+class MessageStore {
+  id: any = new Date();
   message;
   moveiId;
 
-  constructor(message:any,movieId:any)
-  {
-   this.message =message;
-   this.moveiId =movieId;
+  constructor(message: any, movieId: any) {
+    this.message = message;
+    this.moveiId = movieId;
   }
-
 }
+
+// objekat
+const messageobject = {
+  id: 0,
+  message: '',
+  moveiId: '',
+ 
+  newMessage : function(mesage:any , movieId:any)
+  {
+    messageobject.id = Math.floor(Math.random()*10000);
+    messageobject.message = mesage;
+    messageobject.moveiId= movieId;
+    return messageobject;
+  }
+};
+
+
 class Messages {
+   //lista objekata 
+  listMessages: any[] = [];
   
-   listMessages : any [] =[]
-   
   constructor() {
     makeAutoObservable(this, undefined, { autoBind: true });
+    this.loadMessages();
   }
 
-  addMessage(message:any,movieId:any)
-  {
-   //this.listMessages= JSON.parse(localStorage.getItem('message') as any);
-    this.listMessages.push(new MessageStore(message,movieId));
-    //localStorage.removeItem('message');
-    localStorage.setItem('message',JSON.stringify(this.listMessages))
-   
-   
-   this.loadMessages(movieId);
-    
+  addMessage(message: any, movieId: any) {
+    this.listMessages.push(messageobject.newMessage(message, movieId)); 
+    localStorage.setItem('message', JSON.stringify(this.listMessages));
+
+    this.loadMessages();
   }
-  loadMessages(movieId:any) {
-    if (localStorage.getItem('message') !== null) {
-      this.listMessages = JSON.parse(localStorage.getItem('message')as any).filter((x:any)=>x.moveiId.includes(movieId));
+  
+  loadMessages() {
+    if (localStorage.getItem('message') !== null)
+    {
+      this.listMessages = JSON.parse(localStorage.getItem('message') as any);
     }
-   
-  //var newlist=JSON.parse(localStorage.getItem('message') as any);
-  //this.listMessages= newlist.filter((x:any)=>x.moveiId.includes(movieId));
   }
-  deleteMessage(id : any)
-  {
-    this.listMessages.splice(this.listMessages.indexOf(id),1)
-    localStorage.setItem('message',JSON.stringify(this.listMessages))
+
+  deleteMessage(id: any) {
+    this.listMessages.splice(this.listMessages.indexOf(id), 1);
+    localStorage.setItem('message', JSON.stringify(this.listMessages));
   }
 }
+
 const message = new Messages();
 export default message;
