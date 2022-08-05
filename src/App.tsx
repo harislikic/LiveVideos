@@ -6,7 +6,7 @@ import MissingVideo from './pages/MissingVideo';
 import state from './Stores/VideoStore';
 import { observer } from 'mobx-react-lite';
 import Messages from './pages/Messages';
-import ProbaStore from './Testiram/Home'
+import ProbaStore from './Testiram/Home';
 function App() {
   /* const [videoToggle, setVideoToggle] = useState(false);
   function videoPlaying() {
@@ -41,19 +41,13 @@ function App() {
         movie={movie}
         // videoPlaying={videoPlaying}
         // videoPaused={videoPaused}
-        
       />
       <br />
-        <Messages/>
-      
+      <Messages />
     </>
   ) : (
     <MissingVideo />
   );
-
-  
-   
-
 }
 
 export default observer(App);

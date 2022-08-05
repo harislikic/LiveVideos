@@ -16,6 +16,7 @@ function Messages() {
 
   useEffect(() => {
     console.log('local storage data;', localStorage);
+    console.log('dictionary data',Message.listMessages);
 
     var broj = Math.floor(Math.random()*10000);
     console.log('broj',broj);
@@ -24,15 +25,18 @@ function Messages() {
   }, []);
 
   return (
+    
     <>
+    
       <div className="container mx-auto w-1/2 border heig h-96">
         <div className=" lg:col-span-2 lg:block">
           <div className="relative   p-6 overflow-y-auto h-[20rem]">
             <ul className="space-y-2">
-              {Message.listMessages.map(data => (
-                <li key={data.id} className="flex justify-start">
+              {Object.entries( Message.listMessages).map( ([key,value])  => ( 
+                <li  className="flex justify-start">
                   <div className="relative max-w-xl px-4 py-2 text-gray-700 rounded shadow">
-                    <span className="block">{data.message}</span>
+                    <span key={key} className="block">value</span>
+                   
                   </div>
                   {isModerator && (
                     <button
@@ -45,6 +49,7 @@ function Messages() {
                       Delete
                     </button>
                   )}
+                  
                 </li>
               ))}
             </ul>

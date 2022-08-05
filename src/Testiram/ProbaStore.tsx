@@ -19,12 +19,16 @@ const  car = {
 class Auto{
     listofCars : any[] =[];
 
+    dictionary : any = {};
+    poruke  = [];
+
     constructor(){
         makeAutoObservable(this,undefined,{autoBind:true});
     }
     addCar(ime:any,prezime:any)
     {
-    this.listofCars.push(car.newCar(ime,prezime));
+    this.dictionary[ime] = this.poruke;
+    this.dictionary[ime].push(ime);
     localStorage.setItem('auta',JSON.stringify(this.listofCars));
     }
     loadCars()
