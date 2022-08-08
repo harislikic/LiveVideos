@@ -1,22 +1,23 @@
 import { observer } from 'mobx-react-lite';
-import Probastore from './ProbaStore'
+
 import React, { useEffect } from 'react';
+import { rootStore } from './RootsTore';
 
 function Home() {
   let ime: any;
   let prezime: any;
-
+   const {probaStore} =rootStore;
 
   useEffect(()=>{
     console.log('proba local sotrage',localStorage);
-    Probastore.loadCars();
+    probaStore.loadCars();
   },[]);
 
   return (
     <>
     <div className='container flex items-center justify-between w-full p-3 border-t '>
         <div className=' items-center space-x-1'>
-        {Probastore.listofCars.map(data=> 
+        {probaStore.listofCars.map(data=> 
         <table>
             <tr key={data.id}>
 
@@ -51,7 +52,7 @@ function Home() {
        <button
               className=" p-3 border border-gray-300  rounded-full outline-nonehover:bg-gray-100"
               type="submit"
-              onClick={() => Probastore.addCar(ime, prezime)}
+              onClick={() => probaStore.addCar(ime, prezime)}
             >
               Posalji podatke
             </button>

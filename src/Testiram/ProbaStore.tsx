@@ -39,5 +39,5 @@ class Auto{
 
 }
 
-const auto = new Auto();
-export default auto;
+
+export default Auto;

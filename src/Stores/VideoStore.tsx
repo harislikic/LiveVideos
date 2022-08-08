@@ -1,6 +1,6 @@
 import { makeAutoObservable } from 'mobx';
 
-class State {
+class VideoStore {
   playVideo: boolean = false;
   constructor() {
     makeAutoObservable(this, undefined, { autoBind: true });
@@ -12,5 +12,4 @@ class State {
     this.playVideo = false;
   }
 }
-const state = new State();
-export default state;
+export default VideoStore;

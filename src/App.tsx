@@ -3,11 +3,12 @@ import Home from './pages/Home';
 import { getData } from './data/data';
 import ReactHlsPlayer from './video';
 import MissingVideo from './pages/MissingVideo';
-import state from './Stores/VideoStore';
 import { observer } from 'mobx-react-lite';
 import Messages from './pages/Messages';
-import ProbaStore from './Testiram/Home';
+import { rootStore } from './Stores/RootStore';
+
 function App() {
+  const { videoStore } = rootStore;
   /* const [videoToggle, setVideoToggle] = useState(false);
   function videoPlaying() {
     setVideoToggle(true);
@@ -31,7 +32,7 @@ function App() {
   }
   return movie ? (
     <>
-      {state.playVideo && (
+      {videoStore.playVideo && (
         <div className="flex justify-center">
           <p className="text-2xl">Video is playing</p>
         </div>
@@ -63,12 +64,13 @@ interface VideoProps {
   // videoPaused: any;
 }
 function Videos({ movie, playerRef }: VideoProps) {
+  const { videoStore } = rootStore;
   useEffect(() => {
-    playerRef.current.addEventListener('play', state.play);
-    playerRef.current.addEventListener('pause', state.pause);
+    playerRef.current.addEventListener('play', videoStore.play);
+    playerRef.current.addEventListener('pause', videoStore.pause);
     return () => {
-      playerRef.current.removeEventListener('play', state.play);
-      playerRef.current.removeEventListener('pause', state.pause);
+      playerRef.current.removeEventListener('play', videoStore.play);
+      playerRef.current.removeEventListener('pause', videoStore.pause);
     };
   }, []);
 
