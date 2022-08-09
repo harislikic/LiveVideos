@@ -5,9 +5,10 @@ import VideoStore from './VideoStore';
 
 class RootStore {
   constructor(
-      public readonly messageStore = new MessageStore(),
+     
       public readonly userStore = new UserStore(),
       public readonly videoStore = new VideoStore(),
+      public readonly messageStore = new MessageStore(videoStore),
     ) {
     makeAutoObservable(this, undefined, { autoBind: true });
   }
