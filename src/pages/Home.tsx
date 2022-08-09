@@ -1,8 +1,9 @@
 import { getData } from '../data/data';
 
 function Home() {
-  let data = getData();
+  let data = getData() ;
   return (
+    <>
     <div className="container mx-auto grid h-screen place-items-center text-6xl">
       Welcome to React HLS player!
       <div className="flex flex-row ">
@@ -17,6 +18,9 @@ function Home() {
         ))}
       </div>
     </div>
+    <br />
+
+    </>
   );
 }
 
