@@ -7,8 +7,7 @@ class UserStore {
     makeAutoObservable(this, undefined, { autoBind: true });
   }
   isModerator() {
-    this.moderator = !this.moderator;
-  
+    this.moderator = !this.moderator; 
   }
  
 }
