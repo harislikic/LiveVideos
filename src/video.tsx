@@ -1,19 +1,29 @@
 import React, { useEffect, RefObject } from 'react';
 import Hls, { HlsConfig } from 'hls.js';
+import { rootStore } from './Stores/RootStore';
+import { getDataById } from './data/data';
 
 export interface HlsPlayerProps
   extends React.VideoHTMLAttributes<HTMLVideoElement> {
   hlsConfig?: HlsConfig;
   playerRef: RefObject<HTMLVideoElement>;
   src: string;
+  
+  
 }
+const { videoStore } = rootStore;
+let movie = getDataById(videoStore.id);
+
 
 function ReactHlsPlayer({
+ 
+
   hlsConfig,
   playerRef = React.createRef<HTMLVideoElement>(),
   src,
   autoPlay,
   ...props
+ 
 }: HlsPlayerProps) {
   useEffect(() => {
     let hls: Hls;

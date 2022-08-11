@@ -6,46 +6,40 @@ import MissingVideo from './pages/MissingVideo';
 import { observer } from 'mobx-react-lite';
 import Messages from './pages/Messages';
 import { rootStore } from './Stores/RootStore';
+import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
+import { Route, Routes } from 'react-router-dom';
+import Login from './pages/Login';
+import NavBar from './pages/NavBar';
+import Videos from './pages/Video';
 
 function App() {
   const { videoStore } = rootStore;
 
-  const playerRef = React.useRef<any>();
+  const playerRef = React.useRef<HTMLVideoElement>();
+  let movie = getDataById(Number(videoStore.id) ) as  any;
 
-  
-  let movie = getDataById(videoStore.id);
-  let check: boolean = window.location.search.includes('id=');
+  return (
+    <div>
+      <NavBar />
 
-  if (check == false) {
-    return <Home></Home>;
-  }
-  return movie ? (
-    <>
-      {videoStore.playVideo && (
-        <div className="flex justify-center">
-          <p className="text-2xl">Video is playing</p>
-        </div>
-      )}
-      <Videos playerRef={playerRef} movie={movie} />
-      <br />
-      <Messages />
-    </>
-  ) : (
-    <MissingVideo />
+      <Routes>
+        <Route path="login" element={<Login />} />
+        <Route path="/" element={<Home />} />
+        <Route path="video/id=:id" element={<Videos movie={movie} playerRef={playerRef} />} />
+        
+        <Route path="Not-found" element={<MissingVideo />} />
+      </Routes>
+    </div>
   );
 }
 
-export default observer(App);
-
-interface VideoProps {
+/*interface VideoProps {
   movie: {
-    id: string;
+    id: number;
     link: string;
     name: string;
   };
   playerRef: any;
-  // videoPlaying: any;
-  // videoPaused: any;
 }
 function Videos({ movie, playerRef }: VideoProps) {
   const { videoStore } = rootStore;
@@ -59,12 +53,21 @@ function Videos({ movie, playerRef }: VideoProps) {
   }, []);
 
   return (
-    <div>
-      <a href="/" className="text-l my-3 justify-start">
-        Back to homepage!
-      </a>
-      <div className="flex flex-col justify-center items-center">
-        <div className="text-xl my-6">{movie.name}...</div>
+    <div className="place-content-center">
+      <div className="divide-y-8 bg-gray-100 text-blue-600 visited:text-purple-600 w-20 content-center ">
+        <a href="/home" className="text-l my-3 justify-center">
+          Back to homepage!
+        </a>
+      </div>
+      <div className="flex flex-row justify-center items-center">
+        <a href={`?id=${videoStore.videoId - 1}`}>
+          <MdChevronLeft
+            className="opacity-50 cursor-pointer hover:opacity-100"
+            onClick={() => videoStore.imeidRoot()}
+            size={40}
+          />
+        </a>
+
         <ReactHlsPlayer
           id="player"
           className="content-center"
@@ -75,8 +78,19 @@ function Videos({ movie, playerRef }: VideoProps) {
           width="50%"
           height="auto"
           muted
+          
         />
+
+        <a href={`?id=${videoStore.id + 1}`}>
+          <MdChevronRight
+            className="opacity-50 cursor-pointer hover:opacity-100"
+            size={40}
+          />
+        </a>
       </div>
     </div>
   );
 }
+
+*/
+export default observer(App);

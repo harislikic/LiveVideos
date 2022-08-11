@@ -55,12 +55,12 @@ function Messages() {
               onChange={handleChange}
               type="text"
               placeholder="Message"
-              className="  block w-full py-1 pl-4 mx-1 bg-gray-100 rounded-full outline-none focus:text-gray-700"
+              className="  block w-full py-1 pl-4 mx-1 bg-gray-50 rounded-full outline-none focus:text-gray-700"
               name="message"
               required
             />
             <button
-              className="transition-duration: 150ms p-3 border border-gray-100  rounded-full outline-none hover:bg-gray-100"
+              className="transition-duration: 150ms bg-gray-50 p-3 border border-gray-100  rounded-full outline-none hover:bg-gray-100"
               type="submit"
               onClick={handleClick}
             >
