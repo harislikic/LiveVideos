@@ -49,7 +49,7 @@ function Login() {
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                 </svg>
                 <a href="/">
-                <span   className="inline-block ml-1">Back to home page</span>
+                <span   className="inline-block ml-1">Back to home page!</span>
                 </a>
             </button>
           </div>
