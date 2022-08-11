@@ -3,29 +3,12 @@ import { rootStore } from './RootStore';
 import VideoStore from './VideoStore';
 
 class MessageStore {
-
-  showChat : boolean = false;
-
   listMessages: Record<string, string[]> = {};
   messages: string[] = [];
 
   constructor(private videoStore: VideoStore) {
     makeAutoObservable(this, undefined, { autoBind: true });
   }
-
- 
-     ToogleChat() {
-       
-      var x = document.getElementById("myDIV") as any;
-      
-      if (x.style.display === "none") {
-        x.style.display = "block";
-      } else {
-       x.style.display = "none";
-      }
-     this.showChat=!this.showChat;
-   
-   }
 
   addMessage(message: string) {
     this.listMessages = JSON.parse(localStorage.getItem('message') as string);

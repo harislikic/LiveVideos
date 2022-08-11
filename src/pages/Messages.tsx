@@ -23,7 +23,7 @@ function Messages() {
 
   return (
     <>
-      <div id='myDIV' className="container mx-auto w-1/4 border  h-96   ">
+      <div className="container mx-auto w-1/2 border heig h-96">
         <div className=" lg:col-span-2 lg:block">
           <div className="relative   p-6 overflow-y-auto h-[20rem]">
             <ul className="space-y-2">
@@ -69,19 +69,12 @@ function Messages() {
           </div>
         </div>
       </div>
-      <div  className="p-3 justify-center flex row-auto">
+      <div className="p-3 justify-center flex row-auto">
         <button
           className="p-3 border border-gray-300  hover:visible hover:bg-gray-100 "
           onClick={() => userStore.isModerator()}
         >
           {userStore.moderator ? 'Turn of Admin ' : 'Turn on Admin  '}
-        </button>
-
-        <button 
-          className="p-3 border border-gray-300  hover:visible hover:bg-gray-100 "
-          onClick={() => messageStore.ToogleChat()}
-        >
-          {messageStore.showChat ? 'Show chat ' : 'Hide chat'  }
         </button>
       </div>
     </>
