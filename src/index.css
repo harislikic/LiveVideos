@@ -15,3 +15,9 @@
 :hover + .button, .button:hover {
   display: inline-block;
 }
+
+
+
+#slider::-webkit-scrollbar{
+  background: #000;
+}

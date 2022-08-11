@@ -1,10 +1,15 @@
 import { makeAutoObservable } from 'mobx';
+import { useParams } from 'react-router-dom';
 
 class VideoStore {
   playVideo: boolean = false;
   videoId : any;
+
+
   constructor() {
     makeAutoObservable(this, undefined, { autoBind: true });
+   
+  
   }
   play() {
     this.playVideo = true;
@@ -28,13 +33,9 @@ class VideoStore {
       );
   }
 
-  changeRoot(id:number)
-  {
-    <a href={`?id=${id}`}></a> 
-    console.log('provjera rada funckije');
-    console.log('poslani id', id);
+  setID(id: number) {
+    window.location.href = 'id=' + id;
   }
-  
   
 }
 

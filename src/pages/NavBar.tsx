@@ -1,9 +1,11 @@
+import { rootStore } from '../Stores/RootStore';
 
+const { userStore } = rootStore;
 
 function NavBar() {
   return (
     <>
-      <nav className="bg-white border-gray-200 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900 w-full ">
+      <nav className="bg-gray-200 border-gray-500 px-2 sm:px-4 py-2.5 rounded dark:bg-gray-900 w-full ">
         <div className="container flex flex-wrap justify-between items-center mx-auto bg-gray-100 ">
           <div
             className="  w-full  flex-1 flex justify-center mr-auto md:block md:w-auto"
@@ -27,10 +29,14 @@ function NavBar() {
                   Login
                 </a>
               </li>
-              <li></li>
+              <li>
+              <p>wellcome, {userStore.username}</p>
+              </li>
             </ul>
           </div>
         </div>
+
+          
       </nav>
     </>
   );
