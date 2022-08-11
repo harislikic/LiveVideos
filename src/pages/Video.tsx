@@ -1,10 +1,13 @@
 import { observer } from 'mobx-react-lite';
 import React, { useEffect } from 'react';
 import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
-import { getDataById } from '../data/data';
+import { getData, getDataById } from '../data/data';
 import { rootStore } from '../Stores/RootStore';
 import ReactHlsPlayer from '../video';
 import Messages from './Messages';
+import { IoClose } from 'react-icons/io5';
+import MissingVideo from './MissingVideo';
+import { useParams } from 'react-router-dom';
 
 interface VideoProps {
   movie: {
@@ -13,29 +16,53 @@ interface VideoProps {
     name: string;
   };
   playerRef: any;
+  videoDataLenght : number;
 }
-function Videos({ movie, playerRef }: VideoProps) {
-  const { videoStore } = rootStore;
+function Videos({ movie, playerRef ,videoDataLenght }: VideoProps) {
+  const {videoStore  } = rootStore;
+  let  {id} = useParams();
+  console.log('use params',id)
+
+  const handleClick = (newId: number) => {
+    if (newId > videoDataLenght) {
+      
+      return videoStore.setID(1);
+    }
+    if (newId < 1) {
+      return videoStore.setID(videoDataLenght);
+    }
+    videoStore.setID(newId);
+  };
   useEffect(() => {
-    playerRef.current.addEventListener('play', videoStore.play);
-    playerRef.current.addEventListener('pause', videoStore.pause);
+    playerRef.current?.addEventListener('play', videoStore.play);
+    playerRef.current?.addEventListener('pause', videoStore.pause);
     return () => {
-      playerRef.current.removeEventListener('play', videoStore.play);
-      playerRef.current.removeEventListener('pause', videoStore.pause);
+      playerRef.current?.removeEventListener('play', videoStore.play);
+      playerRef.current?.removeEventListener('pause', videoStore.pause);
     };
   }, []);
 
-  return (
+  return movie ? (
     <>
-      <div className="place-content-center">
-        <div className="flex flex-row justify-center items-center">
-        <a href={'id=' + String(videoStore.id-1)}>
+    <div>
+      {videoStore.playVideo &&(
+        <div className='flex justify-center'>
+          <p>Video is playing!</p>
+        </div>
+      )}
+    </div>
+      <div className="place-content-center flex flex-col justify-center items-center  w-full ">
+        <a className=" place-items-end" href="/">
+          <IoClose className="place-items-end" />
+        </a>
+        <div className="flex flex-row justify-center items-center w-1/2">
+        
             <MdChevronLeft
               className="opacity-50 cursor-pointer hover:opacity-100"
-              onClick={() => videoStore.imeidRoot()}
+              onClick={() => handleClick(Number(id) -1 )}
               size={40}
             />
-          </a>
+          
 
           <ReactHlsPlayer
             id="player"
@@ -48,18 +75,22 @@ function Videos({ movie, playerRef }: VideoProps) {
             height="auto"
             muted
           />
+
          
-          <a href={'id=' + String(videoStore.id+1)}>
+            
             <MdChevronRight
               className="opacity-50 cursor-pointer hover:opacity-100"
               size={40}
+              onClick={() => handleClick(Number(id) +1 )}
             />
-          </a>
-         
+          
         </div>
+       
         <Messages />
       </div>
     </>
+  ) : (
+    <MissingVideo />
   );
 }
 
