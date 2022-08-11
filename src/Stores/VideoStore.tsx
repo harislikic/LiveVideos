@@ -28,11 +28,8 @@ class VideoStore {
       );
   }
 
-  changeRoot(id:number)
-  {
-    <a href={`?id=${id}`}></a> 
-    console.log('provjera rada funckije');
-    console.log('poslani id', id);
+  setID(id: number) {
+    window.location.href = 'id=' + id;
   }
   
   
