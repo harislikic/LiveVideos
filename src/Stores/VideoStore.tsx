@@ -1,8 +1,10 @@
-import { makeAutoObservable } from 'mobx';
-
+import { get, makeAutoObservable } from 'mobx';
+import {getNextId} from '../data/data'
+import {getPrevoiusId} from '../data/data'
 class VideoStore {
   playVideo: boolean = false;
-  videoId : any;
+  videoId: any;
+  
   constructor() {
     makeAutoObservable(this, undefined, { autoBind: true });
   }
@@ -12,27 +14,20 @@ class VideoStore {
   pause() {
     this.playVideo = false;
   }
-
-  get id() {
-    return (
-      Number( this.videoId =
-        window.location.href.split('video/').find(x=>x.includes('id='))?.replace('id=','')
-        )
-    )
-  }
-
-  imeidRoot()
+   
+  setId(id : number)
   {
-    return Number(
-      window.location.href.split('video/').find(x=>x.includes('id='))?.replace('id=','')
-      );
+    this.videoId  = id;
+  }
+  getNextVideoId ()
+  {
+    return  getNextId(this.videoId)?.id ;
   }
 
-  setID(id: number) {
-    window.location.href = 'id=' + id;
+  getPreviousVideoId ()
+  {
+     return getPrevoiusId(this.videoId)?.id ;
   }
-  
-  
 }
 
 export default VideoStore;
