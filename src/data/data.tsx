@@ -62,11 +62,30 @@ export function getData() {
 
   
 }
-export function getDataById(id? : number) {
+export function getDataById(id : number) {
   return data.find(x=>x.id == id);
-
-  
 }
+
+export function getNextId(id : number) {
+ const index = data.findIndex(x=>x.id == id);
+
+ if( data.length > index + 1)
+ {
+  return data[index + 1]
+ }
+ return data[0]
+}
+export function getPrevoiusId(id : number) {
+  const index = data.findIndex(x=>x.id == id);
+ 
+  if( index > 0)
+  {
+   return data[index -1]
+  }
+  return data[data.length - 1];
+  
+ }
+
 interface IGetData{
   id: number
   link: string
