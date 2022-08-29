@@ -8,7 +8,6 @@ import Messages from './Messages';
 import { IoClose } from 'react-icons/io5';
 import MissingVideo from './MissingVideo';
 import { Link, useParams } from 'react-router-dom';
-import MessageStore from '../Stores/MessageStore';
 
 interface VideoProps {
   movie: {
@@ -21,26 +20,25 @@ interface VideoProps {
 }
 function Videos() {
   const { videoStore } = rootStore;
-  let { id } = useParams() ;
+  let { id } = useParams();
   videoStore.setId(Number(id));
 
   let videoDataLenght = getData().length;
 
   const playerRef = React.useRef<HTMLVideoElement>();
- 
- if (Number(id) > videoDataLenght) id = JSON.stringify(1);
-   if (Number(id) < 1) id = JSON.stringify(videoDataLenght);
-  
+
+  if (Number(id) > videoDataLenght) id = JSON.stringify(1);
+  if (Number(id) < 1) id = JSON.stringify(videoDataLenght);
+
   var Movie: VideoProps = {
     movie: getDataById(id as any) as any,
     playerRef: playerRef,
     videoDataLenght: videoDataLenght,
   };
 
-  console.log('video data lenght', videoDataLenght);
-  console.log('video id', id);
- 
   useEffect(() => {
+    videoStore.loadVideoData();
+    console.log('load videos ', videoStore.allVideos);
     playerRef.current?.addEventListener('play', videoStore.play);
     playerRef.current?.addEventListener('pause', videoStore.pause);
     return () => {
@@ -58,23 +56,25 @@ function Videos() {
           </div>
         )}
       </div>
-      <div className="place-content-center flex flex-col justify-center items-center  w-full ">
-        <a className=" place-items-end" href="/">
-          <IoClose className="place-items-end" />
-          <p>{Movie.movie.name}</p>
-        </a>
-        <div className="flex flex-row justify-center items-center w-1/2">
+      <div className="mt-16 phone:w-full  laptop:w-full desktop:w-full place-content-center flex flex-col justify-center items-center  w-3/5 ">
+        <div className="phone:w-full laptop:w-1/2 flex flex-row justify-center items-center w-1/2">
           <Link to={`/video/${videoStore.getPreviousVideoId()}`}>
             <MdChevronLeft
-            
               className="opacity-50 cursor-pointer hover:opacity-100"
               size={40}
             />
           </Link>
 
+          <Link className=" place-items-end" to="/">
+            <IoClose
+              size={20}
+              className="  text-white  z-10 absolute laptop:right-[30%] laptop:top-[8%] phone:right-[40px] phone:top-[72px] place-items-end bg-black"
+            />
+          </Link>
+
           <ReactHlsPlayer
             id="player"
-            className="content-center"
+            className="phone:w-4/5  content-center"
             playerRef={Movie.playerRef}
             src={Movie.movie.link}
             autoPlay={false}
@@ -83,7 +83,7 @@ function Videos() {
             height="auto"
             muted
           />
-         
+
           <Link to={`/video/${videoStore.getNextVideoId()}`}>
             <MdChevronRight
               className="opacity-50 cursor-pointer hover:opacity-100"
@@ -91,9 +91,8 @@ function Videos() {
             />
           </Link>
         </div>
-         
-         <Messages id={id} />
-       
+
+        <Messages id={id} />
       </div>
     </>
   ) : (

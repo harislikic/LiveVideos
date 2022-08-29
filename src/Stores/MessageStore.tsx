@@ -1,11 +1,10 @@
 import { makeAutoObservable } from 'mobx';
-import { rootStore } from './RootStore';
 import VideoStore from './VideoStore';
 
 class MessageStore {
   showChat: boolean = false;
 
-  listMessages: Record<string, string[]> = {};
+  listMessages: Record<string, any[]> = {};
   messages: string[] = [];
 
   constructor(private videoStore: VideoStore) {
@@ -13,7 +12,7 @@ class MessageStore {
   }
 
   ToogleChat() {
-    var x = document.getElementById('myDIV') as any;
+    const x = document.getElementById('myDIV') as any;
 
     if (x.style.display === 'none') {
       x.style.display = 'block';
@@ -23,15 +22,21 @@ class MessageStore {
     this.showChat = !this.showChat;
   }
 
-  addMessage(message: string , id : number) {
-  
-    if(message == '')  return alert('empty message field!');
-    this.listMessages[id].push(message);
-    localStorage.setItem('message', JSON.stringify(this.listMessages));
+  addMessage(message: string, id: number, username:string) {
+    if (message == '') return alert('empty message field!');
+    let newMessage={
+      id:(Math.random()+1).toString(36).substring(7),
+      message:message,
+      userName:username
+    }
 
+    this.listMessages[id].push(newMessage);
+    console.log('message',newMessage);
+    console.log('list messasges',this.listMessages[id]);
+    localStorage.setItem('message', JSON.stringify(this.listMessages));
   }
 
-  loadMessages(id : number) {
+  loadMessages(id: number) {
     if (localStorage.getItem('message') == null)
       localStorage.setItem('message', JSON.stringify(this.listMessages));
 
@@ -42,14 +47,12 @@ class MessageStore {
     }
 
     localStorage.setItem('message', JSON.stringify(this.listMessages));
-
-
-    console.log('load message funkcija za id ', id);
-    console.log('lista za trenutni id poruke ; ', this.listMessages[id], this.messages);
   }
 
-  deleteMessage(message: string , id : number) {
-    this.listMessages[id] = this.listMessages[id].filter((x: string) => x != message);
+  deleteMessage(message: string, id: number) {
+    this.listMessages[id] = this.listMessages[id].filter(
+      (x: string) => x != message,
+    );
     localStorage.setItem('message', JSON.stringify(this.listMessages));
   }
 }

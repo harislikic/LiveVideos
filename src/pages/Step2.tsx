@@ -2,7 +2,10 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import { rootStore } from '../Stores/RootStore';
-import { Link } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { observer } from 'mobx-react';
+
+const { companieStore } = rootStore;
 
 const schemaStep2 = yup
   .object({
@@ -12,6 +15,8 @@ const schemaStep2 = yup
   .required();
 
 function Step2() {
+  let navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
@@ -21,15 +26,18 @@ function Step2() {
   });
 
   const onSubmit = (data: any) => {
-    console.log('data:', data);
+    companieStore.finish(data);
+
+    return navigate('/companies');
   };
 
   return (
     <>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <div className="bg-grey-lighter min-h-screen flex flex-col">
+        <div className="mt-16 phone:w-full bg-grey-lighter w-2/3   flex mr-auto justify-center">
           <div className="container max-w-sm mx-auto flex-1 flex flex-col items-center justify-center px-2">
             <div className="bg-white px-6 py-8 rounded shadow-md text-black w-full">
+             
               <input
                 {...register('address')}
                 type="text"
@@ -52,7 +60,10 @@ function Step2() {
               </p>
 
               <div>
-                <button className='w-1/2 text-center py-3 rounded bg-green bg-gray-200 text-black hover:bg-green-dark focus:outline-none my-1"'>
+                <button
+                  onClick={companieStore.back}
+                  className='w-1/2 text-center py-3 rounded bg-green bg-gray-200 text-black hover:bg-green-dark focus:outline-none my-1"'
+                >
                   Back
                 </button>
 
@@ -71,4 +82,4 @@ function Step2() {
   );
 }
 
-export default Step2;
+export default observer(Step2);

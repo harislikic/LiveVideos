@@ -8,22 +8,16 @@ export interface HlsPlayerProps
   hlsConfig?: HlsConfig;
   playerRef: RefObject<HTMLVideoElement>;
   src: string;
-  
-  
 }
 const { videoStore } = rootStore;
 let movie = getDataById(videoStore.id);
 
-
 function ReactHlsPlayer({
- 
-
   hlsConfig,
   playerRef = React.createRef<HTMLVideoElement>(),
   src,
   autoPlay,
   ...props
- 
 }: HlsPlayerProps) {
   useEffect(() => {
     let hls: Hls;

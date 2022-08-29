@@ -4,22 +4,16 @@
 
 * {
   font-family: 'Times New Roman', Times, serif;
-  
+ 
+ 
   box-sizing: border-box;
 }
 
-
-.button{
+.button  {
   display: none;
 }
-:hover + .button, .button:hover {
+
+:hover + .button,
+.button:hover  {
   display: inline-block;
-}
-
-div.block {
-  
-  overflow-y: auto;
-}
-div.block::-webkit-scrollbar {
-  display: none;
 }

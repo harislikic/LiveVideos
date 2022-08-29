@@ -1,91 +1,104 @@
-import { isValidElement, useEffect, useRef, useState } from 'react';
-import { getData } from '../data/data';
-import { MdChevronLeft, MdChevronRight } from 'react-icons/md';
-import InfiniteScroll from 'react-infinite-scroll-component';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { rootStore } from '../Stores/RootStore';
+import Carousel from './Carousel';
+import { Item } from './Components';
+import { observer } from 'mobx-react';
 
 function Home() {
-  let data = getData();
-  const [Data, setData] = useState(data);
-  const { userStore } = rootStore;
+  const { videoStore } = rootStore;
+  const [online, setStatus] = useState(navigator.onLine);
+
+  setTimeout(() => {
+    const box = document.getElementById('footerDivOnline');
+    if (box != null) box.style.display = 'none';
+  }, 3000);
 
   useEffect(() => {
-     userStore.loadUser();
-    console.log('home app',localStorage);
+    window.addEventListener('offline', () => {
+      setStatus(false);
+    });
+    window.addEventListener('online', () => {
+      setStatus(true);
+    });
+
+    return () => {
+      window.removeEventListener('offline', () => {
+        setStatus(false);
+      });
+      window.removeEventListener('online', () => {
+        setStatus(true);
+      });
+    };
   }, []);
-
-  const slideLeft = () => {
-    var slider = document.getElementById('scrollableDiv');
-    if (slider != null) {
-      slider.scrollLeft = slider.scrollLeft - 500;
-     
-    }
-  };
-  const slideRight = () => {
-    var slider = document.getElementById('scrollableDiv') as any;
-    slider.scrollLeft = slider.scrollLeft + 500;
-  };
-
-  const getMoreData = () => {
-    setData(d => d.concat(data));
-    console.log('get more data funkcija');
-  };
-
-
 
   return (
     <>
-    
-      <div className="container mx-auto bg-stone-100	">
-        <div className="container mx-auto grid h-3/4 place-items-center text-4xl ">
-          Live videos!
+      <div className="  mt-5 mobile:invisible     laptop:visible border border-[#6441a5] rounded-xl shadow-xl mb-8">
+        {videoStore.searchVideos && (
+          <p className="flex justify-center items-center text-[#6441a5] text-xl my-1">
+            Search results...
+          </p>
+        )}
+        <div className="w-full bg-gray-100  overflow-y-scroll    grid m-4 p-2 scroll  laptop:grid-cols-4  mt-2 	  place-content-center  laptop:grid-rows-3 mobile:grid-cols-1">
+          {videoStore.searchVideos?.map((item: any) => (
+            <div className="w-4/5  mt-4 p-2  bg-violet-100  cursor-pointer  shadow-sm  hover:scale-105 ">
+              <Link
+                to={`/video/${item.id}`}
+                key={Math.random()}
+                draggable="false"
+              >
+                <img src={item.thumbnail} alt="" className="w-[520px] h-[160px]" />
+
+                <h1 className="items-center text-xl">{item.name}</h1>
+              </Link>
+            </div>
+          ))}
         </div>
+      </div>
+
+      <div className="max-w-[1080px] phone:w-full  desktop:mt-8 phone:mt-2 desktop:w-4/5 inline  container mx-auto bg-stone-100	h-full ">
         <br />
 
-        <div className="relative flex items-center   ">
-          <div className="bg-gray-200 rounded-xl">
-            
-            <MdChevronLeft
-              className="opacity-50 cursor-pointer hover:opacity-100"
-              onClick={() => slideLeft()}
-              size={40}
-            />
-          </div>
+        <div className=" relative flex items-center justify-end w-full   ">
           <div
-            id='scrollableDiv'
-            className="flex flex-row border-10 overflow-x-scroll  w-full h-full  scroll whitespace-nowrap scroll-smooth  scrollbar-hide"
+            id="scrollableDiv"
+            className="flex flex-row overflow-x-scroll  w-4/5 h-full  scroll  scroll-smooth  scrollbar-hide"
           >
-            <InfiniteScroll
-              dataLength={Data.length}
-              next={() => getMoreData()}
-              hasMore={true}
-              loader={<h4>Loading...</h4>}
-              height={400}
-              scrollableTarget="scrollableDiv"
-            >
-              {Data.map(item => (
-                <Link to={`/video/${item.id}`} key={Math.random()}>
-                  <img
-                    className="w-[220px] h-[150px]  inline-block cursor-pointer hover:scale-105  ease-in-out duration-300"
-                    src={item.thumbnail}
-                    alt=""
-                  />
+            <Carousel>
+              {videoStore.allVideos?.map((video: any) => (
+                <Link to={`/video/${video.id}`} key={video.id}>
+                  <Item
+                    className="w-[320px] h-[220px]  	 bg-gray-200  hover:scale-105  "
+                    img={video.thumbnail}
+                  >
+                    <h1 className="items-center text-xl">{video.name}</h1>
+                  </Item>
                 </Link>
               ))}
-            </InfiniteScroll>
-          </div>
-          <div className="bg-gray-200 rounded-xl">
-            <MdChevronRight
-              className="opacity-50 cursor-pointer hover:opacity-100"
-              onClick={() => slideRight()}
-              size={40}
-            />
+            </Carousel>
           </div>
         </div>
       </div>
+
+      {online ? (
+        <footer>
+          <div
+            id="footerDivOnline"
+            className="fixed z-50 bottom-0 h-6 bg-green-200 w-full flex justify-center"
+          >
+            <h1>You are online!</h1>
+          </div>
+        </footer>
+      ) : (
+        <footer className="fixed z-50 bottom-0 bg-red-200 w-full h-6 flex justify-center">
+          <div className='className="fixed z-50 bottom-0 h-6 bg-green-200 w-full flex justify-center'>
+            Offline, please connect to internet!
+          </div>
+        </footer>
+      )}
     </>
   );
 }
 
-export default Home;
+export default observer(Home);
